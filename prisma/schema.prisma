@@ -49,18 +49,19 @@ model checking {
 }
 
 model customer {
-  customer_ssn        Int                @id
-  first_name          String             @db.VarChar(20)
-  middle_name         String?            @db.VarChar(20)
-  last_name           String             @db.VarChar(20)
-  street_address      String             @db.VarChar(25)
-  apt_no              String?            @db.VarChar(25)
-  zip_code            String             @db.VarChar(5)
-  state_name          String             @db.VarChar(13)
-  city                String             @db.VarChar(25)
+  customer_ssn        Int                   @id
+  first_name          String                @db.VarChar(20)
+  middle_name         String?               @db.VarChar(20)
+  last_name           String                @db.VarChar(20)
+  street_address      String                @db.VarChar(25)
+  apt_no              String?               @db.VarChar(25)
+  zip_code            String                @db.VarChar(5)
+  state_name          String                @db.VarChar(13)
+  city                String                @db.VarChar(25)
   personal_banker_ssn Int?
-  employee            employee?          @relation(fields: [personal_banker_ssn], references: [employee_ssn], onUpdate: NoAction, map: "customer_ibfk_1")
+  employee            employee?             @relation(fields: [personal_banker_ssn], references: [employee_ssn], onUpdate: NoAction, map: "customer_ibfk_1")
   customer_to_acct    customer_to_acct[]
+  customercredentials customercredentials[]
 
   @@index([personal_banker_ssn], map: "personal_banker_ssn")
 }
@@ -138,4 +139,13 @@ model transaction {
   account                    account? @relation(fields: [TRANSACTION_ACCOUNT_NUMBER], references: [ACCOUNT_NUMBER], onUpdate: NoAction, map: "transaction_ibfk_1")
 
   @@index([TRANSACTION_ACCOUNT_NUMBER], map: "TRANSACTION_ACCOUNT_NUMBER")
+}
+
+model customercredentials {
+  email       String   @id @db.VarChar(50)
+  password    String   @db.VarChar(100)
+  customer_id Int
+  customer    customer @relation(fields: [customer_id], references: [customer_ssn], onDelete: NoAction, onUpdate: NoAction, map: "customercredentials_ibfk_1")
+
+  @@index([customer_id], map: "customer_id")
 }
