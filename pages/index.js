@@ -1,8 +1,10 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
+import { PrismaClient } from '@prisma/client'
+
+const prisma = new PrismaClient()
 
 const inter = Inter({ subsets: ['latin'] })
-
 export default function Home() {
   return (
     <main
