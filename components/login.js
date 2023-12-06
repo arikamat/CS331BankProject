@@ -19,8 +19,7 @@ export default function Login() {
     }
     return (
         <div className="w-full p-6 bg-white rounded-md shadow-md lg:max-w-xl">
-            <h1 className="text-3xl font-bold text-center text-gray-700">Logo</h1>
-            <h1 className="text-3xl font-bold text-center text-gray-700">Sign Up</h1>
+            <h1 className="text-3xl font-bold text-center text-gray-700">Log In</h1>
 
             <form className="mt-6" onSubmit={handleSubmit(onSubmit)}>
                 
