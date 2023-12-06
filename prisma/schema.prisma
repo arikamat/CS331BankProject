@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model account {
+  ACCOUNT_NUMBER          Int                @id
+  NAME                    String             @db.VarChar(50)
+  ORIGINATING_BRANCH_ID   Int?
+  BALANCE                 Float              @db.Float
+  MOST_RECENT_ACCESS_DATE DateTime?          @db.Date
+  branch                  branch?            @relation(fields: [ORIGINATING_BRANCH_ID], references: [branch_id], onUpdate: NoAction, map: "account_ibfk_1")
+  checking                checking?
+  customer_to_acct        customer_to_acct[]
+  loan                    loan[]
+  moneymarket             moneymarket?
+  savings                 savings?
+  transaction             transaction[]
+
+  @@index([ORIGINATING_BRANCH_ID], map: "ORIGINATING_BRANCH_ID")
+}
+
+model branch {
+  branch_name                                     String     @db.VarChar(50)
+  branch_id                                       Int        @id
+  branch_manager_ssn                              Int?
+  assistant_manager_ssn                           Int?
+  street_address                                  String     @db.VarChar(25)
+  zip_code                                        String     @db.VarChar(5)
+  city                                            String     @db.VarChar(25)
+  state_name                                      String     @db.VarChar(13)
+  account                                         account[]
+  employee_branch_branch_manager_ssnToemployee    employee?  @relation("branch_branch_manager_ssnToemployee", fields: [branch_manager_ssn], references: [employee_ssn], onDelete: NoAction, onUpdate: NoAction, map: "branch_ibfk_1")
+  employee_branch_assistant_manager_ssnToemployee employee?  @relation("branch_assistant_manager_ssnToemployee", fields: [assistant_manager_ssn], references: [employee_ssn], onDelete: NoAction, onUpdate: NoAction, map: "branch_ibfk_2")
+  employee_employee_branch_idTobranch             employee[] @relation("employee_branch_idTobranch")
+
+  @@index([assistant_manager_ssn], map: "assistant_manager_ssn")
+  @@index([branch_manager_ssn], map: "branch_manager_ssn")
+}
+
+model checking {
+  CHECKING_ACCOUNT_NUMBER Int     @id
+  OVERDRAFT               Float?  @db.Float
+  account                 account @relation(fields: [CHECKING_ACCOUNT_NUMBER], references: [ACCOUNT_NUMBER], onDelete: Cascade, onUpdate: NoAction, map: "checking_ibfk_1")
+}
+
+model customer {
+  customer_ssn        Int                @id
+  first_name          String             @db.VarChar(20)
+  middle_name         String?            @db.VarChar(20)
+  last_name           String             @db.VarChar(20)
+  street_address      String             @db.VarChar(25)
+  apt_no              String?            @db.VarChar(25)
+  zip_code            String             @db.VarChar(5)
+  state_name          String             @db.VarChar(13)
+  city                String             @db.VarChar(25)
+  personal_banker_ssn Int?
+  employee            employee?          @relation(fields: [personal_banker_ssn], references: [employee_ssn], onUpdate: NoAction, map: "customer_ibfk_1")
+  customer_to_acct    customer_to_acct[]
+
+  @@index([personal_banker_ssn], map: "personal_banker_ssn")
+}
+
+model customer_to_acct {
+  CA_CUSTOMER_SSN   Int
+  CA_ACCOUNT_NUMBER Int
+  customer          customer @relation(fields: [CA_CUSTOMER_SSN], references: [customer_ssn], onDelete: Cascade, onUpdate: NoAction, map: "customer_to_acct_ibfk_1")
+  account           account  @relation(fields: [CA_ACCOUNT_NUMBER], references: [ACCOUNT_NUMBER], onDelete: Cascade, onUpdate: NoAction, map: "customer_to_acct_ibfk_2")
+
+  @@id([CA_CUSTOMER_SSN, CA_ACCOUNT_NUMBER])
+  @@index([CA_ACCOUNT_NUMBER], map: "CA_ACCOUNT_NUMBER")
+}
+
+model dependent {
+  employee_ssn Int
+  name         String   @db.VarChar(25)
+  employee     employee @relation(fields: [employee_ssn], references: [employee_ssn], onDelete: Cascade, onUpdate: NoAction, map: "dependent_ibfk_1")
+
+  @@id([employee_ssn, name])
+}
+
+model employee {
+  employee_ssn                                  Int         @id
+  first_name                                    String      @db.VarChar(20)
+  middle_name                                   String?     @db.VarChar(20)
+  last_name                                     String      @db.VarChar(20)
+  start_date                                    DateTime    @db.Date
+  phone_num                                     String      @db.VarChar(10)
+  branch_id                                     Int?
+  SUPERVISOR_SSN                                Int?
+  branch_branch_branch_manager_ssnToemployee    branch[]    @relation("branch_branch_manager_ssnToemployee")
+  branch_branch_assistant_manager_ssnToemployee branch[]    @relation("branch_assistant_manager_ssnToemployee")
+  customer                                      customer[]
+  dependent                                     dependent[]
+  branch_employee_branch_idTobranch             branch?     @relation("employee_branch_idTobranch", fields: [branch_id], references: [branch_id], onUpdate: NoAction, map: "employee_ibfk_1")
+  employee                                      employee?   @relation("employeeToemployee", fields: [SUPERVISOR_SSN], references: [employee_ssn], onUpdate: NoAction, map: "employee_ibfk_2")
+  other_employee                                employee[]  @relation("employeeToemployee")
+
+  @@index([SUPERVISOR_SSN], map: "SUPERVISOR_SSN")
+  @@index([branch_id], map: "branch_id")
+}
+
+model loan {
+  LOAN_ACCOUNT_NUMBER Int
+  LOAN_NUMBER         Int
+  LOAN_AMOUNT         Float   @db.Float
+  MONTHLY_REPAYMENT   Float   @db.Float
+  FIXED_INTEREST_RATE Float   @db.Float
+  account             account @relation(fields: [LOAN_ACCOUNT_NUMBER], references: [ACCOUNT_NUMBER], onDelete: Cascade, onUpdate: NoAction, map: "loan_ibfk_1")
+
+  @@id([LOAN_ACCOUNT_NUMBER, LOAN_NUMBER])
+}
+
+model moneymarket {
+  MONEYMARKET_ACCOUNT_NUMBER Int     @id
+  VARIABLE_INTEREST_RATE     Float   @db.Float
+  account                    account @relation(fields: [MONEYMARKET_ACCOUNT_NUMBER], references: [ACCOUNT_NUMBER], onDelete: Cascade, onUpdate: NoAction, map: "moneymarket_ibfk_1")
+}
+
+model savings {
+  SAVINGS_ACCOUNT_NUMBER Int     @id
+  FIXED_INTERESTRATE     Float   @db.Float
+  account                account @relation(fields: [SAVINGS_ACCOUNT_NUMBER], references: [ACCOUNT_NUMBER], onDelete: Cascade, onUpdate: NoAction, map: "savings_ibfk_1")
+}
+
+model transaction {
+  TRANSACTION_ID             String   @id @db.VarChar(5)
+  TRANSACTION_CODE           String   @db.VarChar(5)
+  TRANSACTION_CHARGE         Float    @db.Float
+  TRANSACTION_DATE           DateTime @db.Date
+  TRANSACTION_HOUR           Int
+  TRANSACTION_ACCOUNT_NUMBER Int?
+  TRANSACTION_AMOUNT         Float    @db.Float
+  account                    account? @relation(fields: [TRANSACTION_ACCOUNT_NUMBER], references: [ACCOUNT_NUMBER], onUpdate: NoAction, map: "transaction_ibfk_1")
+
+  @@index([TRANSACTION_ACCOUNT_NUMBER], map: "TRANSACTION_ACCOUNT_NUMBER")
+}
