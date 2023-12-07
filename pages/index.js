@@ -18,9 +18,9 @@ export default function Home() {
 
       <main>
         <Navbar/>
+        <Homepage/>
+        <Footer/>
       </main>
-      <Homepage/>
-      <Footer/>
 
       
       
