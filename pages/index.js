@@ -4,12 +4,15 @@ import Head from 'next/head'
 import Footer from '../components/footer'
 import Homepage from '../components/homepage'
 import Navbar from '../components/navbar'
-
+import { LoginCtx } from '@/context/contexts'
+import { useContext } from 'react'
 
 const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
+    const {user, setUser, loggedIn, setLoggedIn} = useContext(LoginCtx)
     return (
         <div>
+            {/* {loggedIn ? <h1> LOGGED IN as  {user.user}</h1> : <h1>Not Logged IN</h1> } */}
             <Head>
                 <title>D&A Bank</title>
                 <meta name="description" content="" />
@@ -22,7 +25,7 @@ export default function Home() {
                     <Homepage />
                 </div>
                 <Footer />
-            </main>
+                 </main>
 
 
 
