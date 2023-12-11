@@ -2,8 +2,11 @@ import Link from "next/link";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
+import { useRouter } from 'next/navigation'
 
 export default function CreateAcct() {
+    const router = useRouter()
+
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState(null);
 
@@ -17,12 +20,15 @@ export default function CreateAcct() {
         try {
             const response = await axios.post("/api/create", data);
             if (response.status === 200) {
+                router.push("/login")
                 console.log("User created successfully");
             }
         } catch (error) {
             console.log(error);
             setError(error.response.data.error);
         }
+        
+
     }
     return (
         <div className="w-full p-6 bg-white rounded-md shadow-md lg:max-w-xl">
