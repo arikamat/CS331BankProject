@@ -12,7 +12,9 @@ export default function Login() {
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState(null);
     const {user, setUser, loggedIn, setLoggedIn} = useContext(LoginCtx)
-
+    if(loggedIn){
+        router.push("/");
+    }
     const onSubmit = async (data) => {
         try {
             const response = await axios.post("/api/auth", data);

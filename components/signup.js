@@ -1,15 +1,20 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { useRouter } from 'next/navigation'
+import { LoginCtx } from "@/context/contexts";
 
 export default function CreateAcct() {
     const router = useRouter()
-
+    
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState(null);
+    const {user, setUser, loggedIn, setLoggedIn} = useContext(LoginCtx)
 
+    if(loggedIn){
+        router.push("/");
+    }
     const onSubmit = async (data) => {
         const ssn = parseInt(data.ssn)
         if(isNaN(ssn)){
