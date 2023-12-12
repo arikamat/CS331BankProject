@@ -6,12 +6,12 @@ import Transactions from '@/components/transactions';
 
 const TransactionsPage = () => {
     const router = useRouter();
-    console.log("query")
-    console.log(router.query);
+    // console.log("query")
+    // console.log(router.query);
     if (router.query.fromAccountsPage !== 'true') {
-        console.log("rerouting 12")
+        // console.log("rerouting 12")
         router.push('/');
-        return null; // Return null to avoid rendering anything on this page
+        return null; 
     }
 
 

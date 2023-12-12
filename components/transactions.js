@@ -9,10 +9,9 @@ export default function Transactions(props) {
     const router = useRouter()
     const { user, setUser, loggedIn, setLoggedIn } = useContext(LoginCtx)
     const [transactions, setTransactions] = useState([]);
-    console.log("props")
-    console.log(props)
+    // console.log("props")
+    // console.log(props)
     useEffect(() => {
-        // Define an asynchronous function and call it immediately
         const fetchData = async () => {
             try {
                 if (!loggedIn) {
@@ -25,14 +24,14 @@ export default function Transactions(props) {
                 }
                 const transact = await axios.post("/api/gettransactions", props.data);
                 const transRes = transact.data
-                console.log(transRes)
+                // console.log(transRes)
                 for (const obj in transRes) {
-                    console.log("obj")
-                    console.log(obj)
+                    // console.log("obj")
+                    // console.log(obj)
                     transRes[obj]["TRANSACTION_DATE"] = transRes[obj]["TRANSACTION_DATE"].split('T')[0]
                 }
                 setTransactions(transRes);
-                console.log(transRes);
+                // console.log(transRes);
             } catch (error) {
                 console.log(error)
             }

@@ -14,13 +14,13 @@ export default async function handler(req, res) {
         if (!customercred) {
             return res.status(404).json({ error: 'Customer not found' });
         }
-        console.log("here");
-        console.log(customercred);
+        // console.log("here");
+        // console.log(customercred);
         const accounts = await prisma.customer_to_acct.findMany({
             where: { CA_CUSTOMER_SSN: customercred.customer_id },
             include:{account:true}
         });
-        console.log(accounts)
+        // console.log(accounts)
         return res.status(200).json(accounts);
 
     } else {

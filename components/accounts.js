@@ -10,14 +10,13 @@ export default function Accounts() {
     const { user, setUser, loggedIn, setLoggedIn } = useContext(LoginCtx)
     const [accounts, setAccounts] = useState([]);
     useEffect(() => {
-        // Define an asynchronous function and call it immediately
         const fetchData = async () => {
             try {
                 if (!loggedIn) {
                     router.push('/login');
                     return;
                 }
-                console.log(user);
+                // console.log(user);
                 const accts = await axios.post("/api/getaccounts", user);
                 const data = [];
                 for (const property in accts.data) {
@@ -26,7 +25,7 @@ export default function Accounts() {
                     data.push(t)
                 }
                 setAccounts(data);
-                console.log(accounts);
+                // console.log(accounts);
             } catch (error) {
                 console.log(error)
             }
