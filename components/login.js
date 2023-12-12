@@ -19,11 +19,11 @@ export default function Login() {
             if (response.status === 200) {
                 const nameres = await axios.post("/api/getname", data);
                 setLoggedIn(true);
-                console.log(nameres);
+                // console.log(nameres);
                 setUser({email: data.email, name: nameres.data.name});
                 
                 router.push("/")
-                console.log("Logged In successfully");
+                // console.log("Logged In successfully");
             }
         } catch (error) {
             setError(error.response.data.error);

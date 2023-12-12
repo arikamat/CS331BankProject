@@ -21,10 +21,10 @@ export default function CreateAcct() {
             const response = await axios.post("/api/create", data);
             if (response.status === 200) {
                 router.push("/login")
-                console.log("User created successfully");
+                // console.log("User created successfully");
             }
         } catch (error) {
-            console.log(error);
+            // console.log(error);
             setError(error.response.data.error);
         }
         
