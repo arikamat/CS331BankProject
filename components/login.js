@@ -1,16 +1,28 @@
 import Link from "next/link";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useForm } from "react-hook-form";
+import { LoginCtx } from "@/context/contexts";
 import axios from "axios";
+import { useRouter } from 'next/navigation'
+
 
 export default function Login() {
+    const router = useRouter()
+
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState(null);
+    const {user, setUser, loggedIn, setLoggedIn} = useContext(LoginCtx)
 
     const onSubmit = async (data) => {
         try {
             const response = await axios.post("/api/auth", data);
             if (response.status === 200) {
+                const nameres = await axios.post("/api/getname", data);
+                setLoggedIn(true);
+                console.log(nameres);
+                setUser({user: data.email, name: nameres.data.name});
+                
+                router.push("/")
                 console.log("Logged In successfully");
             }
         } catch (error) {
