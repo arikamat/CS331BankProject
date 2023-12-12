@@ -1,6 +1,7 @@
 import { Inter } from 'next/font/google'
 import Head from 'next/head'
 
+import Credo from '../components/credo'
 import Footer from '../components/footer'
 import Homepage from '../components/homepage'
 import Navbar from '../components/navbar'
@@ -18,6 +19,7 @@ export default function Home() {
 
       <main>
         <Navbar/>
+        <Credo/>
         <Homepage/>
         <Footer/>
       </main>
