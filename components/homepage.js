@@ -19,13 +19,13 @@ function Homepage() {
                   CATEGORY
                 </h2>
                 <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                  The Catalyzer
+                  About Us
                 </h1>
-                <p class="leading-relaxed mb-3">
+                {/* <p class="leading-relaxed mb-3">
                   Link 1
-                </p>
+                </p> */}
                 <div class="flex items-center flex-wrap ">
-                  <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                  {/* <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
                     Learn More
                     <svg
                       class="w-4 h-4 ml-2"
@@ -39,7 +39,7 @@ function Homepage() {
                       <path d="M5 12h14"></path>
                       <path d="M12 5l7 7-7 7"></path>
                     </svg>
-                  </a>
+                  </a> */}
                   <span class="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
                     <svg
                       class="w-4 h-4 mr-1"
@@ -87,13 +87,13 @@ function Homepage() {
                   CATEGORY
                 </h2>
                 <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                  The 400 Blows
+                  News
                 </h1>
-                <p class="leading-relaxed mb-3">
+                {/* <p class="leading-relaxed mb-3">
                   Link 2
-                </p>
+                </p> */}
                 <div class="flex items-center flex-wrap">
-                  <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                  {/* <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
                     Learn More
                     <svg
                       class="w-4 h-4 ml-2"
@@ -107,7 +107,7 @@ function Homepage() {
                       <path d="M5 12h14"></path>
                       <path d="M12 5l7 7-7 7"></path>
                     </svg>
-                  </a>
+                  </a> */}
                   <span class="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
                     <svg
                       class="w-4 h-4 mr-1"
@@ -155,13 +155,13 @@ function Homepage() {
                   CATEGORY
                 </h2>
                 <h1 class="title-font text-lg font-medium text-gray-900 mb-3">
-                  Shooting Stars
+                  Careers
                 </h1>
-                <p class="leading-relaxed mb-3">
+                {/* <p class="leading-relaxed mb-3">
                   Link 3
-                </p>
+                </p> */}
                 <div class="flex items-center flex-wrap ">
-                  <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
+                  {/* <a class="text-indigo-500 inline-flex items-center md:mb-2 lg:mb-0">
                     Learn More
                     <svg
                       class="w-4 h-4 ml-2"
@@ -175,7 +175,7 @@ function Homepage() {
                       <path d="M5 12h14"></path>
                       <path d="M12 5l7 7-7 7"></path>
                     </svg>
-                  </a>
+                  </a> */}
                   <span class="text-gray-400 mr-3 inline-flex items-center lg:ml-auto md:ml-0 ml-auto leading-none text-sm pr-3 py-1 border-r-2 border-gray-200">
                     <svg
                       class="w-4 h-4 mr-1"
