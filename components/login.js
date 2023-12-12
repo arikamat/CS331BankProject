@@ -20,7 +20,7 @@ export default function Login() {
                 const nameres = await axios.post("/api/getname", data);
                 setLoggedIn(true);
                 console.log(nameres);
-                setUser({user: data.email, name: nameres.data.name});
+                setUser({email: data.email, name: nameres.data.name});
                 
                 router.push("/")
                 console.log("Logged In successfully");
